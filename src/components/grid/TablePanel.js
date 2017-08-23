@@ -11,7 +11,7 @@ import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import ConfirmModal from './ConfirmModal'
 import Mask from '../layout/Mask'
 import configUtil from '../../configUtil'
-
+var timer,searchValue;
 export default class TablePanel extends React.Component {
 	static propTypes = {
 		reloaddata: React.PropTypes.bool,
@@ -70,7 +70,14 @@ export default class TablePanel extends React.Component {
 	}
 
 	onQuickFilterText(event) {
-		this.refs.table.handleSearch(event.target.value);
+		var self=this;
+		searchValue=event.target.value;
+		if(timer){
+			clearTimeout(timer);
+		}
+		timer=setTimeout(function(){
+			self.refs.table.handleSearch(searchValue);
+		},350)
 	}
 
 	showEditModal(data) {
